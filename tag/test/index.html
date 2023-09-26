@@ -8,10 +8,10 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <link rel="preload" as="style" href="../../assets/built/screen.css@v=a364e1ca0c.css" />
-    <link rel="preload" as="script" href="../../assets/built/casper.js@v=a364e1ca0c" />
+    <link rel="preload" as="style" href="../../assets/built/screen.css@v=500ec8f515.css" />
+    <link rel="preload" as="script" href="../../assets/built/casper.js@v=500ec8f515" />
 
-    <link rel="stylesheet" type="text/css" href="../../assets/built/screen.css@v=a364e1ca0c.css" />
+    <link rel="stylesheet" type="text/css" href="../../assets/built/screen.css@v=500ec8f515.css" />
 
     <link rel="canonical" href="index.html">
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -47,12 +47,45 @@
     <meta name="generator" content="Ghost 5.65">
     <link rel="alternate" type="application/rss+xml" title="" href="../../rss/index.html">
     
-    <script defer src="https://cdn.jsdelivr.net/ghost/sodo-search@~1.1/umd/sodo-search.min.js" data-key="950e03da7906f30a539c7c1a69" data-styles="https://cdn.jsdelivr.net/ghost/sodo-search@~1.1/umd/main.css" data-sodo-search="http://localhost:2368/" crossorigin="anonymous"></script><style>:root {--ghost-accent-color: #000000;}</style>
+    <script defer src="https://cdn.jsdelivr.net/ghost/sodo-search@~1.1/umd/sodo-search.min.js" data-key="950e03da7906f30a539c7c1a69" data-styles="https://cdn.jsdelivr.net/ghost/sodo-search@~1.1/umd/main.css" data-sodo-search="http://localhost:2368/" crossorigin="anonymous"></script>
     
     <link href="http://localhost:2368/webmentions/receive/" rel="webmention">
+    <link href='https://cdn.rawgit.com/openhiun/hangul/14c0f6faa2941116bb53001d6a7dcd5e82300c3f/nanumbarungothic.css' rel='stylesheet' type='text/css'>
+<style>
+body,  
+h1, h2, h3, h4, h5, h6,  
+.main-nav a,
+.subscribe-button,
+.page-title,
+.post-meta,
+.read-next-story .post:before,
+.pagination,
+.site-footer,
+[class^="icon-"]:before, [class*=" icon-"]:before {
+	font-family:"Nanum Barun Gothic", sans-serif;
+</style>
+
+
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<style>
+  pre {
+    word-wrap: normal;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    -webkit-hyphens: none;
+    hyphens: none;
+    font-size: 0.7em;
+    line-height: 1.3em;
+  }
+  pre code, pre tt {
+    white-space: pre;
+  }
+</style><style>:root {--ghost-accent-color: #000000;}</style>
 
 </head>
-<body class="tag-template tag-test is-head-middle-logo has-sans-body">
+<body class="tag-template tag-test is-head-middle-logo has-serif-title">
 <div class="viewport">
 
     <header id="gh-head" class="gh-head outer is-header-hidden">
@@ -158,7 +191,7 @@
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
     crossorigin="anonymous">
 </script>
-<script src="../../assets/built/casper.js@v=a364e1ca0c"></script>
+<script src="../../assets/built/casper.js@v=500ec8f515"></script>
 <script>
 $(document).ready(function () {
     // Mobile Menu Trigger
@@ -170,7 +203,15 @@ $(document).ready(function () {
 });
 </script>
 
-
+<script>
+var links = document.querySelectorAll('a');  
+for (var i = 0; i < links.length; i++) {
+  if (links[i].hostname != window.location.hostname) {
+    links[i].target = '_blank';
+    links[i].rel = 'noopener';
+  }
+}
+</script>
 
 </body>
 </html>
