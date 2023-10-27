@@ -8,10 +8,10 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <link rel="preload" as="style" href="../../assets/built/screen.css@v=0e56f9b36c.css" />
-    <link rel="preload" as="script" href="../../assets/built/casper.js@v=0e56f9b36c" />
+    <link rel="preload" as="style" href="../../assets/built/screen.css@v=a709d6da66.css" />
+    <link rel="preload" as="script" href="../../assets/built/casper.js@v=a709d6da66" />
 
-    <link rel="stylesheet" type="text/css" href="../../assets/built/screen.css@v=0e56f9b36c.css" />
+    <link rel="stylesheet" type="text/css" href="../../assets/built/screen.css@v=a709d6da66.css" />
 
     <link rel="canonical" href="index.html">
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -74,7 +74,13 @@ h1, h2, h3, h4, h5, h6,
   pre code, pre tt {
     white-space: pre;
   }
-</style><style>:root {--ghost-accent-color: #000000;}</style>
+</style>
+
+<!-- link tag -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-tomorrow.min.css" integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkSFWOoGGJgS2CW70VK5dQM5Oh+7ne47s74VTg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/line-numbers/prism-line-numbers.min.css" integrity="sha512-cbQXwDFK7lj2Fqfkuxbo5iD1dSbLlJGXGpfTDqbggqjHJeyzx88I3rfwjS38WJag/ihH7lzuGlGHpDBymLirZQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/toolbar/prism-toolbar.min.css" integrity="sha512-ycl7dIZ0VJ5535/dzskAMTwOI6OoTNZ3PeD+tfckvYqMmAzaEwQfJHqJTSqcV2iQeJnp5XxnFy5jKotibstp7A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>:root {--ghost-accent-color: #000000;}</style>
 
 </head>
 <body class="author-template author-gamja is-head-middle-logo has-serif-title">
@@ -93,7 +99,6 @@ h1, h2, h3, h4, h5, h6,
             <nav class="gh-head-menu">
                 <ul class="nav">
     <li class="nav-home"><a href="../../index.html">Home</a></li>
-    <li class="nav-about"><a href="../../about/index.html">About</a></li>
     <li class="nav-allposts"><a href="../../tag/posts/index.html">AllPosts</a></li>
 </ul>
 
@@ -135,7 +140,7 @@ h1, h2, h3, h4, h5, h6,
         </section>
 
             
-<article class="post-card post tag-test tag-posts no-image">
+<article class="post-card post tag-posts no-image">
 
 
     <div class="post-card-content">
@@ -143,17 +148,23 @@ h1, h2, h3, h4, h5, h6,
         <a class="post-card-content-link" href="../../test/index.html">
             <header class="post-card-header">
                 <div class="post-card-tags">
-                        <span class="post-card-primary-tag">Test</span>
+                        <span class="post-card-primary-tag">Posts</span>
                 </div>
                 <h2 class="post-card-title">
-                    프로젝트에 관한 teststset
+                    Oauth로그인 리팩토링
                 </h2>
             </header>
-                <div class="post-card-excerpt">test</div>
+                <div class="post-card-excerpt">프로젝트를 진행 하며 회원 가입 서비스의 일부분인 Oauth 로그인 부분을 총 3 단계에 걸쳐 리팩 토링을 진행하였고 그 과정에서 겪은 고민이나 해결 과정을 정리해보고자 합니다.
+
+
+문제 정의
+
+로그인 서비스를 진행하며 회원 가입을 Oauth를 통해 하기로 결정했습니다. 최초 Github를 통해 하기로 결정했고,  Github를 통해 회원 정보를 받아 Jwt를 통해 로그인 서비스를</div>
         </a>
 
         <footer class="post-card-meta">
             <time class="post-card-meta-date" datetime="2023-09-24">Sep 24, 2023</time>
+                <span class="post-card-meta-length">5 min read</span>
         </footer>
 
     </div>
@@ -190,7 +201,7 @@ h1, h2, h3, h4, h5, h6,
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
     crossorigin="anonymous">
 </script>
-<script src="../../assets/built/casper.js@v=0e56f9b36c"></script>
+<script src="../../assets/built/casper.js@v=a709d6da66"></script>
 <script>
 $(document).ready(function () {
     // Mobile Menu Trigger
@@ -211,6 +222,34 @@ for (var i = 0; i < links.length; i++) {
   }
 }
 </script>
+
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        document.querySelectorAll('pre[class*=language-]').forEach(function (node) {
+            node.classList.add('line-numbers');
+        });
+        Prism.highlightAll();
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js" integrity="sha512-hpZ5pDCF2bRCweL5WoA0/N1elet1KYL5mx3LP555Eg/0ZguaHawxNvEjF6O3rufAChs16HVNhEc6blF/rZoowQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!-- Prism Languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-markup-templating.min.js" integrity="sha512-TbMpeuT8rHP3DrAX8tSkpspYIT3It0fypBn5XaSp+Hiy3n9wvPFjd3pal7YtesrphulbmxcLNB9E0sq7xDGtWg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-bash.min.js" integrity="sha512-/xr8BBHgclic5pEsdspPqQS8ne+X8QbYRK22c1WRDj8zERTBJDH+Ic/3o8vnrdz5yeGzlzMfp8k33tGgDaAh6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-python.min.js" integrity="sha512-yIpe1UXrH/ZWwu3n7MdHNfMbPXftP0jlg9+lRhzlpbolElt33h3PGx9ICzqf/k+yca3QNzqcO3sdtKJuYRTi4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-php.min.js" integrity="sha512-2RfDhHj8vXXJWFGaCJTSkt//hXtdb9/Sh2c68tx/Jf+0V5a7xOHY1oIlzF9KX591HX/cB+uDQMBXeYX/JKvlrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-ignore.min.js" integrity="sha512-nOh7T3GqdtbSsxWGfh/Z/XO9j4sNuVZUO5o3KtlqlqhU4L5CtNZwc25qrMjHh5P+6FbVXpOZiH9LEs8yGacRJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-css.min.js" integrity="sha512-Jv/EO8zjSyqIDa2S0YjCGFY+mEROxud6g7AhfA0KcggjdzhPBhoRyetxV7G7/dnfBdZBzcOvpRn1K+J6sn3jyw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-javascript.min.js" integrity="sha512-3oavHcAYV/4pmn+iDuax6ru7dpjKnd+21+SzCQrYdTiYDncloL7QJ3qYvsA9JU0p7ZQjB+DizGeWMm2sUrCzSQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-cpp.min.js" integrity="sha512-8EwqvTiuBowYPkAp0PO9wsLgJuFwS3jDQoSqZW3w8pzMOyxF/P5jV1GKl5/NU3KSCl4cQP6CRi5gC2gne99cpg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-java.min.js" integrity="sha512-8EwqvTiuBowYPkAp0PO9wsLgJuFwS3jDQoSqZW3w8pzMOyxF/P5jV1GKl5/NU3KSCl4cQP6CRi5gC2gne99cpg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<!-- Prism Plug-ins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/line-numbers/prism-line-numbers.min.js" integrity="sha512-dubtf8xMHSQlExGRQ5R7toxHLgSDZ0K7AunqPWHXmJQ8XyVIG19S1T95gBxlAeGOK02P4Da2RTnQz0Za0H0ebQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/toolbar/prism-toolbar.min.js" integrity="sha512-YrvgEHAi5/3o2OT+/vh1z19oJXk/Kk0qdVKbjEFl9VRmcLTaWRYzVziZCvoGpJ2TrnV7rB8pnJcz1ioVJjgw2A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js" integrity="sha512-pUNGXbOrc+Y3dm5z2ZN7JYQ/2Tq0jppMDOUsN4sQHVJ9AUQpaeERCUfYYBAnaRB9r8d4gtPKMWICNhm3tRr4Fg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 </body>
 </html>
