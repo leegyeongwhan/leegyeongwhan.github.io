@@ -8,10 +8,10 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <link rel="preload" as="style" href="../assets/built/screen.css@v=a709d6da66.css" />
-    <link rel="preload" as="script" href="../assets/built/casper.js@v=a709d6da66" />
+    <link rel="preload" as="style" href="../assets/built/screen.css@v=315670a469.css" />
+    <link rel="preload" as="script" href="../assets/built/casper.js@v=315670a469" />
 
-    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css@v=a709d6da66.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css@v=315670a469.css" />
 
     <link rel="canonical" href="index.html">
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -26,7 +26,7 @@
 로그인 서비스를 진행하며 회원 가입을 Oauth를 통해 하기로 결정했습니다. 최초 Github를 통해 하기로 결정했고,  Github를 통해 회원 정보를 받아 Jwt를 통해 로그인 서비스를">
     <meta property="og:url" content="http://localhost:2368/posts/">
     <meta property="article:published_time" content="2023-09-24T06:59:20.000Z">
-    <meta property="article:modified_time" content="2023-10-27T13:00:15.000Z">
+    <meta property="article:modified_time" content="2023-11-10T08:41:09.000Z">
     <meta property="article:tag" content="Posts">
     
     <meta property="article:publisher" content="https://www.facebook.com/ghost">
@@ -67,9 +67,9 @@
     "headline": "Oauth로그인 리팩토링",
     "url": "http://localhost:2368/posts/",
     "datePublished": "2023-09-24T06:59:20.000Z",
-    "dateModified": "2023-10-27T13:00:15.000Z",
+    "dateModified": "2023-11-10T08:41:09.000Z",
     "keywords": "Posts",
-    "description": "프로젝트를 진행 하며 회원 가입 서비스의 일부분인 Oauth 로그인 부분을 총 3 단계에 걸쳐 리팩 토링을 진행하였고 그 과정에서 겪은 고민이나 해결 과정을 정리해보고자 합니다.\n\n\n문제 정의\n\n로그인 서비스를 진행하며 회원 가입을 Oauth를 통해 하기로 결정했습니다. 최초 Github를 통해 하기로 결정했고,  Github를 통해 회원 정보를 받아 Jwt를 통해 로그인 서비스를 구축했습니다.\n\n\n문제 발생\n\n팀원들 과의 의논 후 추가적인 회원 가입 플랫폼 확장을 위해 Kakao Oauth 또한 도입 하기로 했습니다. 여기서 문제가 발생했습니다.  확장성을 고려하지 않은 설계에 의해 다른 플랫폼 회원 가입시 API를 하나 더 추가 해야했고  기존의 코드에 중복이 많이 발생하게 되었습니다.\n\n\n원인\n\n\n\n   @Transactional\n    public MemberLoginResponse login(String code) {\n        AccessTokenResponseDTO ",
+    "description": "프로젝트를 진행 하며 회원 가입 서비스의 일부분인 Oauth 로그인 부분을 총 3 단계에 걸쳐 리팩 토링을 진행하였고 그 과정에서 겪은 고민이나 해결 과정을 정리해보고자 합니다.\n\n\n문제 정의\n\n로그인 서비스를 진행하며 회원 가입을 Oauth를 통해 하기로 결정했습니다. 최초 Github를 통해 하기로 결정했고,  Github를 통해 회원 정보를 받아 Jwt를 통해 로그인 서비스를 구축했습니다.\n\n\n문제 발생\n\n팀원들 과의 의논 후 추가적인 회원 가입 플랫폼 확장을 위해 Kakao Oauth 또한 도입 하기로 했습니다. 여기서 문제가 발생했습니다.  확장성을 고려하지 않은 설계에 의해 다른 플랫폼 회원 가입시 API를 하나 더 추가 해야했고  기존의 코드에 중복이 많이 발생하게 되었습니다.\n\n\n원인\n\n\n\n    @Transactional\n    public MemberLoginResponse login(String code) {\n        AccessTokenResponseDTO",
     "mainEntityOfPage": "http://localhost:2368/posts/"
 }
     </script>
@@ -80,10 +80,12 @@
     <script defer src="https://cdn.jsdelivr.net/ghost/sodo-search@~1.1/umd/sodo-search.min.js" data-key="950e03da7906f30a539c7c1a69" data-styles="https://cdn.jsdelivr.net/ghost/sodo-search@~1.1/umd/main.css" data-sodo-search="http://localhost:2368/" crossorigin="anonymous"></script>
     
     <link href="http://localhost:2368/webmentions/receive/" rel="webmention">
-    <link href='https://cdn.rawgit.com/openhiun/hangul/14c0f6faa2941116bb53001d6a7dcd5e82300c3f/nanumbarungothic.css' rel='stylesheet' type='text/css'>
+    <link href='https://rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+<link href='https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'>
 <style>
+/* 전체 폰트 크기 설정 */
 body,  
-h1, h2, h3, h4, h5, h6,  
+h1, h2, h3, h4, h5, h6,
 .main-nav a,
 .subscribe-button,
 .page-title,
@@ -91,38 +93,49 @@ h1, h2, h3, h4, h5, h6,
 .read-next-story .post:before,
 .pagination,
 .site-footer,
-[class^="icon-"]:before, [class*=" icon-"]:before {
-	font-family:"Nanum Barun Gothic", sans-serif;
+.post-full-content,
+.post-card-excerpt,
+.post-full-custom-excerpt,
+[class^="icon-"]:before,
+[class*=" icon-"]:before { /* 여기에 원하는 폰트 크기를 지정하세요. */
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+}
+    
+@media (min-width: 1300px)
+.gh-sidebar {
+    position: absolute;
+    top: 2vmin;
+    bottom: 0;
+    margin-top: 4vmin;
+    margin-right: 4vmin;
+    grid-column: wide-start / main-start;
+}
+
+/* Prism 코드 블록 폰트 크기 설정 (예시) */
+/* .token 태그는 Prism 라이브러리가 생성하는 코드 블록 요소를 가리킵니다. */
+.token {
+    font-size: 14px; /* 코드 블록 폰트 크기를 14px로 설정 */
+}
+
+/* Table of Contents (TOC) 폰트 크기 설정 (예시) */
+/* .toc-link 클래스는 TOC 요소를 가리킵니다. */
+.toc-link {
+    font-size: 14px; /* TOC 폰트 크기를 16px로 설정 */
+}
+
 </style>
 
-
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<style>
-  pre {
-    word-wrap: normal;
-    -moz-hyphens: none;
-    -ms-hyphens: none;
-    -webkit-hyphens: none;
-    hyphens: none;
-    font-size: 0.7em;
-    line-height: 1.3em;
-  }
-  pre code, pre tt {
-    white-space: pre;
-  }
+<style>  
+.gh-canvas .article-image img {  
+	max-width: 350px;  
+	height: auto;  
+}  
 </style>
 
-<!-- link tag -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-tomorrow.min.css" integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkSFWOoGGJgS2CW70VK5dQM5Oh+7ne47s74VTg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/line-numbers/prism-line-numbers.min.css" integrity="sha512-cbQXwDFK7lj2Fqfkuxbo5iD1dSbLlJGXGpfTDqbggqjHJeyzx88I3rfwjS38WJag/ihH7lzuGlGHpDBymLirZQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/toolbar/prism-toolbar.min.css" integrity="sha512-ycl7dIZ0VJ5535/dzskAMTwOI6OoTNZ3PeD+tfckvYqMmAzaEwQfJHqJTSqcV2iQeJnp5XxnFy5jKotibstp7A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<style>:root {--ghost-accent-color: #000000;}</style>
-    <!-- link tag -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-tomorrow.min.css" integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkSFWOoGGJgS2CW70VK5dQM5Oh+7ne47s74VTg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/line-numbers/prism-line-numbers.min.css" integrity="sha512-cbQXwDFK7lj2Fqfkuxbo5iD1dSbLlJGXGpfTDqbggqjHJeyzx88I3rfwjS38WJag/ihH7lzuGlGHpDBymLirZQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/toolbar/prism-toolbar.min.css" integrity="sha512-ycl7dIZ0VJ5535/dzskAMTwOI6OoTNZ3PeD+tfckvYqMmAzaEwQfJHqJTSqcV2iQeJnp5XxnFy5jKotibstp7A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css" integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkSFWOoGGJgS2CW70VK5dQM5Oh+7ne47s74VTg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.13.5/tocbot.min.css" integrity="sha512-SFw7k74K3983tyOlJIHa8atr9Ppef3Kix5cmifwzU7ZdtU2E0FRuOVRtd3ENpMJ8sNCie5hlb/0j23efcdQJXA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.13.5/tocbot.min.js" integrity="sha512-Pb1ryJBQ8yanWB5d4BaW6AyQsPNkB3m9dVNLpwYeyQA3jxM/NJtLXsB0DU4VOD0EBbJBXm8LOnwsVnQCdClwgg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><style>:root {--ghost-accent-color: #000000;}</style>
 
 </head>
 <body class="post-template tag-posts is-head-middle-logo has-serif-title">
@@ -185,7 +198,7 @@ h1, h2, h3, h4, h5, h6,
                 <h4 class="author-name"><a href="../author/gamja/index.html">gamja</a></h4>
                 <div class="byline-meta-content">
                     <time class="byline-meta-date" datetime="2023-09-24">Sep 24, 2023</time>
-                        <span class="byline-reading-time"><span class="bull">&bull;</span> 5 min read</span>
+                        <span class="byline-reading-time"><span class="bull">&bull;</span> 7 min read</span>
                 </div>
             </div>
 
@@ -196,7 +209,7 @@ h1, h2, h3, h4, h5, h6,
     </header>
 
     <section class="gh-content gh-canvas">
-        <p>프로젝트를 진행 하며 회원 가입 서비스의 일부분인 Oauth 로그인 부분을 총 3 단계에 걸쳐 리팩 토링을 진행하였고 그 과정에서 겪은 고민이나 해결 과정을 정리해보고자 합니다.</p><h2 id="%EB%AC%B8%EC%A0%9C-%EC%A0%95%EC%9D%98">문제 정의</h2><p>로그인 서비스를 진행하며 회원 가입을 Oauth를 통해 하기로 결정했습니다. 최초 Github를 통해 하기로 결정했고,  Github를 통해 회원 정보를 받아 Jwt를 통해 로그인 서비스를 구축했습니다.</p><h3 id="%EB%AC%B8%EC%A0%9C-%EB%B0%9C%EC%83%9D">문제 발생</h3><p>팀원들 과의 의논 후 추가적인 회원 가입 플랫폼 확장을 위해 Kakao Oauth 또한 도입 하기로 했습니다. 여기서 문제가 발생했습니다.  확장성을 고려하지 않은 설계에 의해 다른 플랫폼 회원 가입시 API를 하나 더 추가 해야했고  기존의 코드에 중복이 많이 발생하게 되었습니다.</p><h2 id="%EC%9B%90%EC%9D%B8">원인</h2><p></p><!--kg-card-begin: markdown--><pre><code>   @Transactional
+        <p>프로젝트를 진행 하며 회원 가입 서비스의 일부분인 Oauth 로그인 부분을 총 3 단계에 걸쳐 리팩 토링을 진행하였고 그 과정에서 겪은 고민이나 해결 과정을 정리해보고자 합니다.</p><h2 id="%EB%AC%B8%EC%A0%9C-%EC%A0%95%EC%9D%98">문제 정의</h2><p>로그인 서비스를 진행하며 회원 가입을 Oauth를 통해 하기로 결정했습니다. 최초 Github를 통해 하기로 결정했고,  Github를 통해 회원 정보를 받아 Jwt를 통해 로그인 서비스를 구축했습니다.</p><h3 id="%EB%AC%B8%EC%A0%9C-%EB%B0%9C%EC%83%9D">문제 발생</h3><p>팀원들 과의 의논 후 추가적인 회원 가입 플랫폼 확장을 위해 Kakao Oauth 또한 도입 하기로 했습니다. 여기서 문제가 발생했습니다.  확장성을 고려하지 않은 설계에 의해 다른 플랫폼 회원 가입시 API를 하나 더 추가 해야했고  기존의 코드에 중복이 많이 발생하게 되었습니다.</p><h2 id="%EC%9B%90%EC%9D%B8">원인</h2><p></p><!--kg-card-begin: markdown--><pre><code class="language-java">    @Transactional
     public MemberLoginResponse login(String code) {
         AccessTokenResponseDTO token = oauth.getToken(code);
         logger.debug(&quot;token access 토큰 = {}&quot;, token);
@@ -215,7 +228,7 @@ h1, h2, h3, h4, h5, h6,
         return MemberLoginResponse.of(member, jwtToken);
     }
 </code></pre>
-<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><pre><code>  @Operation(
+<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><pre><code class="language-java">  @Operation(
             summary = &quot;깃허브 로그인&quot;,
             tags = &quot;member&quot;,
             description = &quot;사용자 깃허브를 통한 로그인&quot;
@@ -234,7 +247,7 @@ h1, h2, h3, h4, h5, h6,
     }
 
 </code></pre>
-<!--kg-card-end: markdown--><p>컨트롤러와 서비스를 위와 같이 구현했습니다. Service 레이어에서 code를 매개변수로 받기 때문에 이 코드는 Oauth를 해주는 플랫폼으로 부터 받는 코드이고 이코드로는 사실 어떤 플랫폼으로 부터 받은 코드인지는 Spring에서 확인 할 수 가 없었습니다. 즉 Kakao 회원 가입 전용 Api를 만든다 하더라도 Service에서는 Kakao에서 온 것인지 Github에서 온 것인지 알 수 가 없습니다.</p><h2 id="%EC%B2%AB-%EB%B2%88%EC%A7%B8-%ED%95%B4%EA%B2%B0%EC%B1%85">첫 번째 해결책</h2><p></p><p>처음 든 생각은 단순히 API를 하나 더 만들자 였습니다. Kakao 전용 Api를 만들고 이를 구분 할 수 있는 인터페이스 타입을 만들어 Service 레이에서 타입을 구분하자 라는 생각했습니다.</p><h3 id="%EC%BB%A8%ED%8A%B8%EB%A1%A4%EB%9F%AC%EC%97%90-api%EB%A5%BC-%ED%95%98%EB%82%98-%EB%8D%94-%EC%B6%94%EA%B0%80">컨트롤러에 Api를 하나 더 추가</h3><!--kg-card-begin: markdown--><pre><code>  @Operation(
+<!--kg-card-end: markdown--><p>컨트롤러와 서비스를 위와 같이 구현했습니다. Service 레이어에서 code를 매개변수로 받기 때문에 이 코드는 Oauth를 해주는 플랫폼으로 부터 받는 코드이고 이코드로는 사실 어떤 플랫폼으로 부터 받은 코드인지는 Spring에서 확인 할 수 가 없었습니다. 즉 Kakao 회원 가입 전용 Api를 만든다 하더라도 Service에서는 Kakao에서 온 것인지 Github에서 온 것인지 알 수 가 없습니다.</p><h2 id="%EC%B2%AB-%EB%B2%88%EC%A7%B8-%ED%95%B4%EA%B2%B0%EC%B1%85">첫 번째 해결책</h2><p>처음 든 생각은 단순히 API를 하나 더 만들자 였습니다. Kakao 전용 Api를 만들고 이를 구분 할 수 있는 인터페이스 타입을 만들어 Service 레이에서 타입을 구분하자 라는 생각했습니다.</p><h3 id="%EC%BB%A8%ED%8A%B8%EB%A1%A4%EB%9F%AC%EC%97%90-api%EB%A5%BC-%ED%95%98%EB%82%98-%EB%8D%94-%EC%B6%94%EA%B0%80">컨트롤러에 Api를 하나 더 추가</h3><!--kg-card-begin: markdown--><pre><code class="language-java">  @Operation(
             summary = &quot;카카오 로그인&quot;,
             tags = &quot;members&quot;,
             description = &quot;사용자 카카오를 통한 로그인&quot;
@@ -247,7 +260,7 @@ h1, h2, h3, h4, h5, h6,
         return BasicResponse.send(&quot;카카오 로그인&quot;, memberResponseDTO);
     }
 </code></pre>
-<!--kg-card-end: markdown--><p>위와 같은 Api를 하나 더 만들었습니다. 사실상 github와 호출하는 uri와 request dto만 다를 뿐 같은 login 메서드를 사용해 return합니다.</p><h3 id="%EA%B0%81-%ED%94%8C%EB%9E%AB%ED%8F%BC%EC%9D%80-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%EB%A5%BC-%EA%B5%AC%ED%98%84%ED%95%98%EB%8F%84%EB%A1%9D-%ED%95%9C%EB%8B%A4">각 플랫폼은 인터페이스를 구현하도록 한다. </h3><!--kg-card-begin: markdown--><pre><code>@Getter
+<!--kg-card-end: markdown--><p>위와 같은 Api를 하나 더 만들었습니다. 사실상 github와 호출하는 uri와 request dto만 다를 뿐 같은 login 메서드를 사용해 return합니다.</p><h3 id="%EA%B0%81-%ED%94%8C%EB%9E%AB%ED%8F%BC%EC%9D%80-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%EB%A5%BC-%EA%B5%AC%ED%98%84%ED%95%98%EB%8F%84%EB%A1%9D-%ED%95%9C%EB%8B%A4">각 플랫폼은 인터페이스를 구현하도록 한다. </h3><!--kg-card-begin: markdown--><pre><code class="language-java">@Getter
 @NoArgsConstructor
 public class KakaoRequestCode implements OAuthLoginParams {
     private String authorizationCode;
@@ -266,14 +279,13 @@ public class KakaoRequestCode implements OAuthLoginParams {
     }
 }
 </code></pre>
-<pre><code>
-public interface OAuthLoginParams {
+<pre><code class="language-java">public interface OAuthLoginParams {
     OAuthProvider oAuthProvider();
 
     MultiValueMap&lt;String, String&gt; makeBody();
 }
 </code></pre>
-<pre><code>//이 인터페이스를 카카오와 깃허브가 각각 구현하도록 합니다.
+<pre><code class="language-java">//이 인터페이스를 카카오와 깃허브가 각각 구현하도록 합니다.
   public interface Oauth {
     
     OAuthProvider oAuthProvider();
@@ -284,7 +296,7 @@ public interface OAuthLoginParams {
 }
  
 </code></pre>
-<!--kg-card-end: markdown--><p>위와 같이 <strong>OAuthLoginParams  </strong>인터페이스를 통해  각 플랫폼을 비교하고 서비스에서 각 플랫폼에 맞게 끔 requestOAuthInfoService.request(params, userAgent); 에 맞는 OAuthInfoResponse(카카오나, 깃허브로 부터 받은 유저 정보)를 받도록 합니다.</p><p></p><!--kg-card-begin: markdown--><pre><code>@Component
+<!--kg-card-end: markdown--><p>위와 같이 <strong>OAuthLoginParams  </strong>인터페이스를 통해  각 플랫폼을 비교하고 서비스에서 각 플랫폼에 맞게 끔 requestOAuthInfoService.request(params, userAgent); 에 맞는 OAuthInfoResponse(카카오나, 깃허브로 부터 받은 유저 정보)를 받도록 합니다.</p><p></p><!--kg-card-begin: markdown--><pre><code class="language-java">@Component
 public class RequestOAuthInfoService {
     private final Map&lt;OAuthProvider, Oauth&gt; clients;
 
@@ -301,7 +313,7 @@ public class RequestOAuthInfoService {
     }
 }
 </code></pre>
-<!--kg-card-end: markdown--><p>위 서비스 클레스에서 parms를 비교하여 각 oauth에 맞는 Dto를 반환하도록 합니다.</p><p></p><!--kg-card-begin: markdown--><pre><code>  @Transactional
+<!--kg-card-end: markdown--><p>위 서비스 클레스에서 parms를 비교하여 각 oauth에 맞는 Dto를 반환하도록 합니다.</p><!--kg-card-begin: markdown--><pre><code class="language-java">  @Transactional
     public MemberLoginResponse login(OAuthLoginParams params, String userAgent) throws IOException {
         OAuthInfoResponse oAuthInfoResponse = requestOAuthInfoService.request(params, userAgent);
 
@@ -309,7 +321,62 @@ public class RequestOAuthInfoService {
         return MemberLoginResponse.of(member, jwtToken);
     }
 </code></pre>
-<!--kg-card-end: markdown--><p>이로서 Reuqest에 따라 각 플렛폼을 구분 하여 그에 맞는 dto를 반환 할 수 있게 되었습니다.</p><h3 id="%EB%91%90-%EB%B2%88%EC%A7%B8-%EB%AC%B8%EC%A0%9C">두 번째 문제</h3><p>하지만 다음과 같이 해도 문제가 완전히 해결되지는 않습니다. 사실 플렛폼이 추가된다고 Api가 늘어나는 건 자연스럽지 못한 흐름이라고 생각했습니다.</p><p>요구 사항이 변경 될 시 만약 Naver나 Google같은 다른 서비스가 추가 된다고 가정했을 때 지금의 구조에서는 플랫폼이 추가 될 때마다 Api를 추가 해야하는데 이는 테스트 관점에서 봤을 때도 비효율적이고 굳이 반복되는 지루한 코드를 써야 하는 비효율성도 있습니다.   </p><p>타입이 다르다 하더라도  login서비스 코드는 작은 부분 빼고는 다 같습니다. 메서드는 하나로 유지 하고 , 또한 불필요한 클래스나 인터페이스를 죽여 역할과 협력에 맞게  리팩토링이 필요한 시점이라 판단했습니다.</p><p>정리해보자면</p><ol><li>컨트롤러의 메서드는 플렛폼이 늘어나도 하나로 유지하자.</li><li>코드의 가독성이 떨어지고 클래스들의 역할이 모호한 부분이 많다. 리팩토링이 필요하다.</li></ol><h2 id="%EB%91%90-%EB%B2%88%EC%A7%B8-%ED%95%B4%EA%B2%B0%EC%B1%85">두 번째 해결책</h2><p></p><h2 id="%EA%B5%AC%ED%98%84">구현</h2><p></p><h2 id="%EA%B2%B0%EA%B3%BC">결과</h2><h2></h2>
+<!--kg-card-end: markdown--><p>이로서 Reuqest에 따라 각 플렛폼을 구분 하여 그에 맞는 dto를 반환 할 수 있게 되었습니다.</p><h3 id="%EB%91%90-%EB%B2%88%EC%A7%B8-%EB%AC%B8%EC%A0%9C">두 번째 문제</h3><p>하지만 다음과 같이 해도 문제가 완전히 해결되지는 않습니다. 사실 플렛폼이 추가된다고 Api가 늘어나는 건 자연스럽지 못한 흐름이라고 생각했습니다.</p><p>요구 사항이 변경 될 시 만약 Naver나 Google같은 다른 서비스가 추가 된다고 가정했을 때 지금의 구조에서는 플랫폼이 추가 될 때마다 Api를 추가 해야하는데 이는 테스트 관점에서 봤을 때도 비효율적이고 굳이 반복되는 지루한 코드를 써야 하는 비효율성도 있습니다.   </p><p>타입이 다르다 하더라도  login서비스 코드는 작은 부분 빼고는 다 같습니다. 메서드는 하나로 유지 하고 , 또한 불필요한 클래스나 인터페이스를 죽여 역할과 협력에 맞게  리팩토링이 필요한 시점이라 판단했습니다.</p><p>정리해보자면</p><ol><li>컨트롤러의 메서드는 플렛폼이 늘어나도 하나로 유지하자.</li><li>코드의 가독성이 떨어지고 클래스들의 역할이 모호한 부분이 많다. 리팩토링이 필요하다.</li></ol><h2 id="%EB%91%90-%EB%B2%88%EC%A7%B8-%ED%95%B4%EA%B2%B0%EC%B1%85">두 번째 해결책</h2><!--kg-card-begin: markdown--><pre><code class="language-java">    @PostMapping(&quot;/{provider}/login&quot;)
+    public BasicResponse&lt;LoginResponse&gt; login(@PathVariable OAuthProvider provider,
+                                              @RequestBody @Valid LoginRequest request,
+                                              @NotNullParam(message = &quot;code 값은 반드시 들어와야 합니다.&quot;) String code) {
+        LoginResponse login = authService.login(provider, request, code);
+        return BasicResponse.send(HttpStatus.OK.value(), &quot;카카오 로그인&quot;, login);
+    }
+</code></pre>
+<!--kg-card-end: markdown--><p><strong>"/{provider}/login"  </strong>provider를 @PathVariable로 받는 형식으로 변경합니다.</p><p><strong>OAuthProvider는 </strong>Enum을 통해 밑에와 같이 구현해 줍니다. </p><pre><code class="language-java">
+@Getter
+@RequiredArgsConstructor
+public enum OAuthProvider {
+
+    KAKAO("kakao"),
+    GITHUB("github");
+
+    private final String name;
+    private OAuthRequester oAuthRequester;
+
+    public static OAuthProvider of(final String name) {
+        return Arrays.stream(OAuthProvider.values())
+                .filter(provider -&gt; provider.name.equals(name))
+                .findFirst()
+                .orElseThrow(() -&gt; new NotFoundException(ErrorMessage.OAUTH_PROVIDER_NOT_FOUND));
+    }
+
+    private void injectOAuthClient(OAuthRequester oAuthRequester) {
+        this.oAuthRequester = oAuthRequester;
+    }
+
+    @RequiredArgsConstructor
+    @Component
+    static class OAuthClientInjector {
+
+        private final GithubRequester githubRequester;
+        private final KakaoRequester kakaoRequester;
+
+        @PostConstruct
+        public void injectOAuthClient() {
+            Arrays.stream(OAuthProvider.values()).forEach(oAuthProvider -&gt; {
+                if (oAuthProvider == GITHUB) {
+                    oAuthProvider.injectOAuthClient(githubRequester);
+                }
+                if (oAuthProvider == KAKAO) {
+                    oAuthProvider.injectOAuthClient(kakaoRequester);
+                }
+            });
+        }
+    }
+}
+</code></pre><p>Injection 해주는 내부 클래스를 구현한 후 @PostConstruct를통해(Spring에서 라이프 사이클을 고려한 권장하는 방법)을 통해  <strong>oAuthRequster</strong> 인터페이스에 컨트롤러에서 들어온 oAuthProvider의 enum값에 맞는 값을 inject해줍니다. 이렇게 된다면 최종 적으로  oAuthProvider의 필드인 oAuthRequester에 플랫폼에 맞는 알맞은 값이 들어오게 됩니다. 그 후</p><pre><code class="language-java"> @Transactional
+    public LoginResponse login(OAuthProvider oAuthProvider, LoginRequest request, String code) {
+        OAuthRequester oAuthRequester = oAuthProvider.getOAuthRequester();
+        OauthTokenResponse tokenResponse = oAuthRequester.getToken(code);
+		```생략
+    }</code></pre><p>oAuthProvider.getOAuthRequester() 를 통해 oAuthRequester를 가져온 후 토큰을 얻어 오면됩니다. 이 때 getToken은  결국 get을 통해 가져온 플랫폼에 그전과 같이 회원 정보를 요청 하게 됩니다.</p><h2 id="%EA%B2%B0%EA%B3%BC"><br>결과</h2><p>이를 통해 최종적으로 네이버나 구글 과 같이 다른 플랫폼을 추가 하고 싶을 경우 서비스, 컨트롤러 레이어 코드는 건들지 않고 Enum에 추가 해준 후 <em>OAuthRequester의 구현체만 추가해 주면 됩니다. </em></p><p>이번 리팩토링을 통해 확실히 인터페이스와, Enum을 활용해 코드의 중복을 줄이고 Controller, Service 코드는 변경이 없다는 점이 좋았습니다.</p><p>깃허브 출처: <a href="https://github.com/masters2023-2nd-project-02/second-hand?ref=localhost">https://github.com/masters2023-2nd-project-02/second-hand</a><br></p>
     </section>
 
 
@@ -380,7 +447,7 @@ public class RequestOAuthInfoService {
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
     crossorigin="anonymous">
 </script>
-<script src="../assets/built/casper.js@v=a709d6da66"></script>
+<script src="../assets/built/casper.js@v=315670a469"></script>
 <script>
 $(document).ready(function () {
     // Mobile Menu Trigger
@@ -393,59 +460,27 @@ $(document).ready(function () {
 </script>
 
 <script>
-var links = document.querySelectorAll('a');  
-for (var i = 0; i < links.length; i++) {
-  if (links[i].hostname != window.location.hostname) {
-    links[i].target = '_blank';
-    links[i].rel = 'noopener';
-  }
-}
+    var disqus_shortname = "new-pow-github-io-1"
 </script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-core.min.js" integrity="sha512-9khQRAUBYEJDCDVP2yw3LRUQvjJ0Pjx0EShmaQjcHa6AXiOv6qHQu9lCAIR8O+/D8FtaCoJ2c0Tf9Xo7hYH01Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha512-fTl/qcO1VgvKtOMApX2PdZzkziyr2stM65GYPLGuYMnuMm1z2JLJG6XVU7C/mR+E7xBUqCivykuhlzfqxXBXbg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-    window.addEventListener('DOMContentLoaded', (event) => {
-        document.querySelectorAll('pre[class*=language-]').forEach(function (node) {
-            node.classList.add('line-numbers');
-        });
-        Prism.highlightAll();
+    tocbot.init({
+        tocSelector: '.toc',
+        /* contentSelector: '.post-content', */
+        contentSelector: '.gh-content',
+        hasInnerContainers: true
     });
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js" integrity="sha512-hpZ5pDCF2bRCweL5WoA0/N1elet1KYL5mx3LP555Eg/0ZguaHawxNvEjF6O3rufAChs16HVNhEc6blF/rZoowQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<!-- Prism Languages -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-markup-templating.min.js" integrity="sha512-TbMpeuT8rHP3DrAX8tSkpspYIT3It0fypBn5XaSp+Hiy3n9wvPFjd3pal7YtesrphulbmxcLNB9E0sq7xDGtWg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-bash.min.js" integrity="sha512-/xr8BBHgclic5pEsdspPqQS8ne+X8QbYRK22c1WRDj8zERTBJDH+Ic/3o8vnrdz5yeGzlzMfp8k33tGgDaAh6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-python.min.js" integrity="sha512-yIpe1UXrH/ZWwu3n7MdHNfMbPXftP0jlg9+lRhzlpbolElt33h3PGx9ICzqf/k+yca3QNzqcO3sdtKJuYRTi4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-php.min.js" integrity="sha512-2RfDhHj8vXXJWFGaCJTSkt//hXtdb9/Sh2c68tx/Jf+0V5a7xOHY1oIlzF9KX591HX/cB+uDQMBXeYX/JKvlrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-ignore.min.js" integrity="sha512-nOh7T3GqdtbSsxWGfh/Z/XO9j4sNuVZUO5o3KtlqlqhU4L5CtNZwc25qrMjHh5P+6FbVXpOZiH9LEs8yGacRJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-css.min.js" integrity="sha512-Jv/EO8zjSyqIDa2S0YjCGFY+mEROxud6g7AhfA0KcggjdzhPBhoRyetxV7G7/dnfBdZBzcOvpRn1K+J6sn3jyw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-javascript.min.js" integrity="sha512-3oavHcAYV/4pmn+iDuax6ru7dpjKnd+21+SzCQrYdTiYDncloL7QJ3qYvsA9JU0p7ZQjB+DizGeWMm2sUrCzSQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-cpp.min.js" integrity="sha512-8EwqvTiuBowYPkAp0PO9wsLgJuFwS3jDQoSqZW3w8pzMOyxF/P5jV1GKl5/NU3KSCl4cQP6CRi5gC2gne99cpg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-java.min.js" integrity="sha512-8EwqvTiuBowYPkAp0PO9wsLgJuFwS3jDQoSqZW3w8pzMOyxF/P5jV1GKl5/NU3KSCl4cQP6CRi5gC2gne99cpg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-<!-- Prism Plug-ins -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/line-numbers/prism-line-numbers.min.js" integrity="sha512-dubtf8xMHSQlExGRQ5R7toxHLgSDZ0K7AunqPWHXmJQ8XyVIG19S1T95gBxlAeGOK02P4Da2RTnQz0Za0H0ebQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/toolbar/prism-toolbar.min.js" integrity="sha512-YrvgEHAi5/3o2OT+/vh1z19oJXk/Kk0qdVKbjEFl9VRmcLTaWRYzVziZCvoGpJ2TrnV7rB8pnJcz1ioVJjgw2A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js" integrity="sha512-pUNGXbOrc+Y3dm5z2ZN7JYQ/2Tq0jppMDOUsN4sQHVJ9AUQpaeERCUfYYBAnaRB9r8d4gtPKMWICNhm3tRr4Fg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
- <!-- Prism Languages -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-markup-templating.min.js" integrity="sha512-TbMpeuT8rHP3DrAX8tSkpspYIT3It0fypBn5XaSp+Hiy3n9wvPFjd3pal7YtesrphulbmxcLNB9E0sq7xDGtWg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-bash.min.js" integrity="sha512-/xr8BBHgclic5pEsdspPqQS8ne+X8QbYRK22c1WRDj8zERTBJDH+Ic/3o8vnrdz5yeGzlzMfp8k33tGgDaAh6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-python.min.js" integrity="sha512-yIpe1UXrH/ZWwu3n7MdHNfMbPXftP0jlg9+lRhzlpbolElt33h3PGx9ICzqf/k+yca3QNzqcO3sdtKJuYRTi4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-php.min.js" integrity="sha512-2RfDhHj8vXXJWFGaCJTSkt//hXtdb9/Sh2c68tx/Jf+0V5a7xOHY1oIlzF9KX591HX/cB+uDQMBXeYX/JKvlrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-ignore.min.js" integrity="sha512-nOh7T3GqdtbSsxWGfh/Z/XO9j4sNuVZUO5o3KtlqlqhU4L5CtNZwc25qrMjHh5P+6FbVXpOZiH9LEs8yGacRJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-css.min.js" integrity="sha512-Jv/EO8zjSyqIDa2S0YjCGFY+mEROxud6g7AhfA0KcggjdzhPBhoRyetxV7G7/dnfBdZBzcOvpRn1K+J6sn3jyw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-javascript.min.js" integrity="sha512-3oavHcAYV/4pmn+iDuax6ru7dpjKnd+21+SzCQrYdTiYDncloL7QJ3qYvsA9JU0p7ZQjB+DizGeWMm2sUrCzSQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-cpp.min.js" integrity="sha512-8EwqvTiuBowYPkAp0PO9wsLgJuFwS3jDQoSqZW3w8pzMOyxF/P5jV1GKl5/NU3KSCl4cQP6CRi5gC2gne99cpg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-java.min.js" integrity="sha512-8EwqvTiuBowYPkAp0PO9wsLgJuFwS3jDQoSqZW3w8pzMOyxF/P5jV1GKl5/NU3KSCl4cQP6CRi5gC2gne99cpg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-<!-- Prism Plug-ins -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/line-numbers/prism-line-numbers.min.js" integrity="sha512-dubtf8xMHSQlExGRQ5R7toxHLgSDZ0K7AunqPWHXmJQ8XyVIG19S1T95gBxlAeGOK02P4Da2RTnQz0Za0H0ebQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/toolbar/prism-toolbar.min.js" integrity="sha512-YrvgEHAi5/3o2OT+/vh1z19oJXk/Kk0qdVKbjEFl9VRmcLTaWRYzVziZCvoGpJ2TrnV7rB8pnJcz1ioVJjgw2A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js" integrity="sha512-pUNGXbOrc+Y3dm5z2ZN7JYQ/2Tq0jppMDOUsN4sQHVJ9AUQpaeERCUfYYBAnaRB9r8d4gtPKMWICNhm3tRr4Fg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<style>
+    .article-image {
+        max-width: 500px;
+        margin: 0 auto !important;
+        float: none !important;
+	}
+</style>
 
 </body>
 </html>
